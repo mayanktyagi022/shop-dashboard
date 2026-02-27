@@ -1,0 +1,115 @@
+<div class="dashboard">
+  <header class="header">
+    <div class="brand">
+      <a class="logo" routerLink="/dashboard">Shop</a>
+      <nav class="nav">
+        <div class="nav-item">
+          <a routerLink="/dashboard"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            Dashboard
+          </a>
+        </div>
+
+        <div class="nav-item nav-item-dropdown">
+          <a routerLink="/products"
+             routerLinkActive="active"
+             (click)="toggleProductsMenu($event)"
+             class="nav-link-dropdown"
+             [attr.aria-expanded]="productsMenuOpen"
+             aria-haspopup="menu">
+            <span class="nav-link-text">Products</span>
+            <span class="nav-caret" [class.open]="productsMenuOpen" aria-hidden="true">▾</span>
+          </a>
+          @if (productsMenuOpen) {
+            <div class="nav-dropdown" aria-label="Products submenu">
+              <a routerLink="/products">All products</a>
+              <a routerLink="/products/new">Add product</a>
+              <a routerLink="/cart">View cart</a>
+              <a routerLink="/dashboard">Dashboard home</a>
+            </div>
+          }
+        </div>
+
+        <div class="nav-item nav-item-dropdown">
+          <a routerLink="/cart"
+             routerLinkActive="active"
+             (click)="toggleCartMenu($event)"
+             class="nav-link-dropdown"
+             [attr.aria-expanded]="cartMenuOpen"
+             aria-haspopup="menu">
+            <span class="nav-link-text">Cart</span>
+            <span class="nav-caret" [class.open]="cartMenuOpen" aria-hidden="true">▾</span>
+          </a>
+          @if (cartMenuOpen) {
+            <div class="nav-dropdown" aria-label="Cart submenu">
+              <a routerLink="/cart">View cart</a>
+              <a routerLink="/products">Continue shopping</a>
+              <a routerLink="/products/new">Add product</a>
+              <a routerLink="/dashboard">Dashboard home</a>
+            </div>
+          }
+        </div>
+      </nav>
+    </div>
+    <div class="user">
+      <div class="user-info">
+        <span class="user-name">{{ userName }}</span>
+        @if (userEmail) {
+          <span class="user-email">{{ userEmail }}</span>
+        }
+      </div>
+      <a class="btn btn-outline" routerLink="/login" (click)="logout()">Log out</a>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="welcome">
+      <h1 class="welcome-title">Welcome back, {{ userName }}!</h1>
+      <p class="welcome-subtitle">Here’s what’s happening with your shop today.</p>
+    </section>
+
+    <section class="stats">
+      <h2 class="section-heading">Overview</h2>
+      <div class="stats-grid">
+        @for (stat of stats; track stat.label) {
+          <div class="stat-card">
+            <span class="stat-icon" aria-hidden="true">{{ stat.icon }}</span>
+            <div class="stat-content">
+              <span class="stat-value">{{ stat.value }}</span>
+              <span class="stat-label">{{ stat.label }}</span>
+              @if (stat.trend) {
+                <span class="stat-trend">{{ stat.trend }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="quick-actions">
+      <h2 class="section-heading">Quick actions</h2>
+      <div class="links-grid">
+        @for (link of quickLinks; track link.href) {
+          <a [routerLink]="link.href" class="action-card">
+            <span class="action-icon" aria-hidden="true">{{ link.icon }}</span>
+            <h3 class="action-title">{{ link.title }}</h3>
+            <p class="action-desc">{{ link.description }}</p>
+            <span class="action-arrow">&rarr;</span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <section class="recent">
+      <h2 class="section-heading">Getting started</h2>
+      <div class="tips-card">
+        <ul class="tips-list">
+          <li>Browse products and add items to your cart.</li>
+          <li>Create new products from the Products section.</li>
+          <li>Use the cart to review items before checkout.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>

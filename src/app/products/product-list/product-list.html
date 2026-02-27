@@ -1,0 +1,36 @@
+<div class="page">
+  <header class="header">
+    <div class="brand">
+      <a class="logo" routerLink="/dashboard">Shop</a>
+      <span class="title">Products</span>
+    </div>
+    <div class="user">
+      @if (userEmail) {
+        <span class="email">{{ userEmail }}</span>
+      }
+      <a class="btn btn-outline" routerLink="/login" (click)="logout()">Log out</a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="toolbar">
+      <h2 class="section-title">All products</h2>
+      <a class="btn btn-primary" routerLink="new">Add product</a>
+    </div>
+
+    <ul class="product-grid">
+      @for (product of products; track product.id) {
+        <li class="product-card">
+          <div class="card-inner">
+            <img class="card-image" [src]="product.image" [alt]="product.name" />
+            <h3 class="card-title">{{ product.name }}</h3>
+            <p class="card-meta">ID: {{ product.id }}</p>
+            <div class="card-actions">
+              <span class="card-badge">In stock</span>
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+  </main>
+</div>
